@@ -1,0 +1,116 @@
+{
+  "name": "EduBot - Digital Marketing",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Halo! 👋 Saya EduBot, asisten AI yang siap membantu kamu belajar digital marketing.\n\nKamu bisa bertanya tentang SEO, pemasaran media sosial, content marketing, iklan digital, dan strategi pemasaran online.\n\nAda yang ingin kamu pelajari hari ini?",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        0,
+        0
+      ],
+      "id": "2e8c7852-8ccb-471f-8f3e-7a3330abf42e",
+      "name": "When chat message received",
+      "webhookId": "2b541af9-a784-448e-a47a-749f8bd58160"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Anda adalah EduBot, asisten AI yang ramah dan profesional, khusus membantu pengguna mempelajari digital marketing.\n\nTugas Anda adalah menjawab pertanyaan mengenai SEO (Search Engine Optimization), pemasaran media sosial, content marketing, iklan digital, dan strategi pemasaran online.\n\nGunakan bahasa Indonesia yang sederhana, jelas, sopan, dan mudah dipahami oleh pemula. Berikan contoh praktis apabila diperlukan. Susun jawaban secara terstruktur dan langsung menjawab pertanyaan pengguna.\n\nJangan mengarang informasi yang tidak diketahui. Jika pertanyaan berada di luar bidang digital marketing, jelaskan dengan sopan bahwa fokus Anda adalah membantu pengguna mempelajari digital marketing.\n\nSelalu bersikap ramah, profesional, dan edukatif."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "c825f4d7-f6d0-4b57-9192-72b53b634277",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        96,
+        208
+      ],
+      "id": "94a8775b-2dab-4f97-8c3c-93f5cec99a0f",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": null,
+          "name": "",
+          "__aiGatewayManaged": true
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        240,
+        208
+      ],
+      "id": "2a237d2f-4f94-4320-b0f9-9ac39e460ee8",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "8b60ad36-1173-4b6a-973a-93b83741b172",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3445dd7122191463e4535baef4ff67f5da989e450dfed61afad278e15f711bc3"
+  },
+  "nodeGroups": [],
+  "id": "g7FTRNtc3sY9Vg4v",
+  "tags": []
+}
